@@ -1,6 +1,8 @@
 #include "ImageReader.hpp"
 #include "ImageWriter.hpp"
 #include "VectorTraits_LMUL.hpp"
+#include "Image.hpp"
+#include "ImageStatus.hpp"
 #include <chrono>
 #include <iostream>
 #include <fstream>
@@ -32,22 +34,23 @@ private:
     std::vector<BenchmarkResult> results;
     std::vector<std::vector<uint8_t>> testImage;
     const int iterations = 100;
+    ImageReader<uint8_t> reader;
     
 public:
     bool initialize(const std::string& imagePath) {
-        // Create a simple test image (512x512)
-        const int height = 512;
-        const int width = 512;
-        testImage.resize(height, std::vector<uint8_t>(width));
-        
-        // Fill with test pattern
-        for (int i = 0; i < height; ++i) {
-            for (int j = 0; j < width; ++j) {
-                testImage[i][j] = static_cast<uint8_t>((i + j) % 256);
-            }
+        // Read the actual image file
+        Image image;
+        ImageStatus status = reader.readImage(imagePath, image);
+        if (status != ImageStatus::SUCCESS) {
+            std::cerr << "Failed to read image: " << static_cast<int>(status) << std::endl;
+            return false;
         }
         
+        // Copy the pixel matrix to our test image
+        testImage = image.pixelMatrix;
+        
         std::cout << "=== RISC-V Vector LMUL Performance Analysis ===" << std::endl;
+        std::cout << "Image: " << imagePath << std::endl;
         std::cout << "Image size: " << testImage.size() 
                   << " x " << testImage[0].size() << std::endl;
         std::cout << "Iterations per test: " << iterations << std::endl;
@@ -238,98 +241,31 @@ public:
     
     void generatePythonScript(const std::string& scriptName) {
         std::ofstream script(scriptName);
-        script << R"(#!/usr/bin/env python3
-import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
-
-# Read the benchmark data
-df = pd.read_csv('lmul_benchmark_results.csv')
-
-# Set up the plotting style
-plt.style.use('default')
-fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(15, 12))
-fig.suptitle('RISC-V Vector LMUL Performance Analysis', fontsize=16, fontweight='bold')
-
-operations = df['Operation'].unique()
-lmul_values = ['m1', 'm2', 'm4', 'm8']
-colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']
-
-# Plot 1: Execution Time Comparison
-ax1.set_title('Execution Time by LMUL', fontweight='bold')
-x = np.arange(len(operations))
-width = 0.2
-for i, lmul in enumerate(lmul_values):
-    times = [df[(df['Operation'] == op) & (df['LMUL'] == lmul)]['Time_ms'].values[0] 
-             for op in operations]
-    ax1.bar(x + i*width, times, width, label=lmul, color=colors[i])
-ax1.set_xlabel('Operation')
-ax1.set_ylabel('Time (ms)')
-ax1.set_xticks(x + width * 1.5)
-ax1.set_xticklabels(operations, rotation=45, ha='right')
-ax1.legend()
-ax1.grid(True, alpha=0.3)
-
-# Plot 2: Throughput Comparison
-ax2.set_title('Throughput by LMUL', fontweight='bold')
-for i, lmul in enumerate(lmul_values):
-    throughputs = [df[(df['Operation'] == op) & (df['LMUL'] == lmul)]['Throughput_MPix_sec'].values[0] 
-                   for op in operations]
-    ax2.bar(x + i*width, throughputs, width, label=lmul, color=colors[i])
-ax2.set_xlabel('Operation')
-ax2.set_ylabel('Throughput (MPix/sec)')
-ax2.set_xticks(x + width * 1.5)
-ax2.set_xticklabels(operations, rotation=45, ha='right')
-ax2.legend()
-ax2.grid(True, alpha=0.3)
-
-# Plot 3: Speedup vs m1
-ax3.set_title('Speedup vs LMUL=1', fontweight='bold')
-for i, lmul in enumerate(lmul_values[1:], 1):  # Skip m1
-    speedups = [df[(df['Operation'] == op) & (df['LMUL'] == lmul)]['Speedup_vs_m1'].values[0] 
-                for op in operations]
-    ax3.bar(x + i*width, speedups, width, label=lmul, color=colors[i])
-ax3.axhline(y=1.0, color='black', linestyle='--', alpha=0.5, label='m1 baseline')
-ax3.set_xlabel('Operation')
-ax3.set_ylabel('Speedup Factor')
-ax3.set_xticks(x + width * 1.5)
-ax3.set_xticklabels(operations, rotation=45, ha='right')
-ax3.legend()
-ax3.grid(True, alpha=0.3)
-
-# Plot 4: LMUL Efficiency Analysis
-ax4.set_title('LMUL Theoretical vs Actual Efficiency', fontweight='bold')
-lmul_nums = [1, 2, 4, 8]
-theoretical_speedup = lmul_nums  # Perfect scaling
-for i, op in enumerate(operations):
-    actual_speedups = [df[(df['Operation'] == op) & (df['LMUL'] == f'm{lmul}')]['Speedup_vs_m1'].values[0] 
-                       for lmul in lmul_nums]
-    ax4.plot(lmul_nums, actual_speedups, 'o-', label=op, linewidth=2, markersize=8)
-
-ax4.plot(lmul_nums, theoretical_speedup, 'k--', label='Theoretical (Perfect)', linewidth=2, alpha=0.7)
-ax4.set_xlabel('LMUL Value')
-ax4.set_ylabel('Speedup Factor')
-ax4.set_xticks(lmul_nums)
-ax4.set_xticklabels([f'm{lmul}' for lmul in lmul_nums])
-ax4.legend()
-ax4.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('lmul_performance_analysis.png', dpi=300, bbox_inches='tight')
-plt.show()
-
-# Generate summary statistics
-print("\n=== LMUL PERFORMANCE SUMMARY ===")
-for op in operations:
-    print(f"\n{op}:")
-    op_data = df[df['Operation'] == op]
-    best_lmul = op_data.loc[op_data['Speedup_vs_m1'].idxmax(), 'LMUL']
-    best_speedup = op_data['Speedup_vs_m1'].max()
-    print(f"  Best LMUL: {best_lmul} ({best_speedup:.2f}x speedup)")
-    print(f"  m2 efficiency: {op_data[op_data['LMUL']=='m2']['Speedup_vs_m1'].values[0]:.2f}x")
-    print(f"  m4 efficiency: {op_data[op_data['LMUL']=='m4']['Speedup_vs_m1'].values[0]:.2f}x")
-    print(f"  m8 efficiency: {op_data[op_data['LMUL']=='m8']['Speedup_vs_m1'].values[0]:.2f}x")
-)";
+        script << "#!/usr/bin/env python3\n";
+        script << "import pandas as pd\n";
+        script << "import matplotlib.pyplot as plt\n";
+        script << "import numpy as np\n\n";
+        script << "# Read the benchmark data\n";
+        script << "df = pd.read_csv('lmul_benchmark_results.csv')\n\n";
+        script << "# Create a simple bar plot\n";
+        script << "plt.figure(figsize=(12, 8))\n";
+        script << "operations = df['Operation'].unique()\n";
+        script << "lmul_values = ['m1', 'm2', 'm4', 'm8']\n";
+        script << "colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']\n\n";
+        script << "x = np.arange(len(operations))\n";
+        script << "width = 0.2\n\n";
+        script << "for i, lmul in enumerate(lmul_values):\n";
+        script << "    times = [df[(df['Operation'] == op) & (df['LMUL'] == lmul)]['Time_ms'].values[0] for op in operations]\n";
+        script << "    plt.bar(x + i*width, times, width, label=lmul, color=colors[i])\n\n";
+        script << "plt.xlabel('Operation')\n";
+        script << "plt.ylabel('Time (ms)')\n";
+        script << "plt.title('LMUL Performance Comparison')\n";
+        script << "plt.xticks(x + width * 1.5, operations, rotation=45, ha='right')\n";
+        script << "plt.legend()\n";
+        script << "plt.grid(True, alpha=0.3)\n";
+        script << "plt.tight_layout()\n";
+        script << "plt.savefig('lmul_performance_analysis.png', dpi=300, bbox_inches='tight')\n";
+        script << "plt.show()\n";
         
         std::cout << "\nPython plotting script generated: " << scriptName << std::endl;
         std::cout << "Run 'python3 " << scriptName << "' to generate performance graphs." << std::endl;
