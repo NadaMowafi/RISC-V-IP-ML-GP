@@ -1,0 +1,423 @@
+
+============================Scalar Addition RISC-V==========================================================
+
+=========================SATURATION================================================
+Same Image Sizes
+Image read successfully. Size: 512x512
+Image read successfully. Size: 512x512
+Starting Scalar Add function...
+=== Scalar Add Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 2: 512x512 pixels
+  Total pixels processed: 262144
+Execution time: 92483 microseconds
+Execution time: 92 milliseconds
+Execution time: 92.483000 milliseconds (precise)
+Performance: 2.83 pixels/microsecond
+Performance: 2834510.13 pixels/second
+==========================================
+Scalar image written successfully.
+======================================================================================
+Different Image sizes
+Image read successfully. Size: 512x512
+Image read successfully. Size: 256x256
+Starting Scalar Add function...
+=== Scalar Add Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 2: 256x256 pixels
+  Total pixels processed: 262144
+Execution time: 47168 microseconds
+Execution time: 47 milliseconds
+Execution time: 47.168000 milliseconds (precise)
+Performance: 5.56 pixels/microsecond
+Performance: 5557666.21 pixels/second
+==========================================
+Scalar image written successfully.
+============================================WRAP=======================================
+Image read successfully. Size: 512x512
+Image read successfully. Size: 512x512
+Starting Scalar Add function...
+=== Scalar Add Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 2: 512x512 pixels
+  Total pixels processed: 262144
+Execution time: 82045 microseconds
+Execution time: 82 milliseconds
+Execution time: 82.045000 milliseconds (precise)
+Performance: 3.20 pixels/microsecond
+Performance: 3195124.63 pixels/second
+==========================================
+Scalar image written successfully.
+===========================================================================
+Image read successfully. Size: 512x512
+Image read successfully. Size: 256x256
+Starting Scalar Add function...
+=== Scalar Add Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 2: 256x256 pixels
+  Total pixels processed: 262144
+Execution time: 44571 microseconds
+Execution time: 44 milliseconds
+Execution time: 44.571000 milliseconds (precise)
+Performance: 5.88 pixels/microsecond
+Performance: 5881492.45 pixels/second
+==========================================
+Scalar image written successfully.
+
+
+===========================Addition RVV  m=1======================================================
+
+============================SATURATION==================================================
+Same Image Sizes
+Image read successfully. Size: 512x512
+Image read successfully. Size: 512x512
+Starting __riscv_Add function...
+=== __riscv_Add Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 2: 512x512 pixels
+  Total pixels processed: 262144
+Execution time: 6457 microseconds
+Execution time: 6 milliseconds
+Execution time: 6.457000 milliseconds (precise)
+Performance: 40.60 pixels/microsecond
+Performance: 40598420.32 pixels/second
+==========================================
+AddRVV image written successfully.
+======================================================================================
+Different Image sizes
+Image read successfully. Size: 512x512
+Image read successfully. Size: 256x256
+Starting __riscv_Add function...
+=== __riscv_Add Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 2: 256x256 pixels
+  Total pixels processed: 262144
+Execution time: 9186 microseconds
+Execution time: 9 milliseconds
+Execution time: 9.186000 milliseconds (precise)
+Performance: 28.54 pixels/microsecond
+Performance: 28537339.43 pixels/second
+==========================================
+AddRVV image written successfully.
+======================================WRAP===================================================
+Image read successfully. Size: 512x512
+Image read successfully. Size: 512x512
+Starting __riscv_Add function...
+=== __riscv_Add Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 2: 512x512 pixels
+  Total pixels processed: 262144
+Execution time: 5294 microseconds
+Execution time: 5 milliseconds
+Execution time: 5.294000 milliseconds (precise)
+Performance: 49.52 pixels/microsecond
+Performance: 49517189.27 pixels/second
+==========================================
+Image read successfully. Size: 512x512
+Image read successfully. Size: 256x256
+Starting __riscv_Add function...
+=== __riscv_Add Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 2: 256x256 pixels
+  Total pixels processed: 262144
+Execution time: 8858 microseconds
+Execution time: 8 milliseconds
+Execution time: 8.858000 milliseconds (precise)
+Performance: 29.59 pixels/microsecond
+Performance: 29594039.29 pixels/second
+==========================================
+// Different size of images needs for optimization
+
+===============================Scalar Weighted Addition RISC-V=====================================
+=======================SATURATION==================================================
+Image read successfully. Size: 512x512
+Image read successfully. Size: 512x512
+Starting Scalar AddWeighted function...
+=== Scalar AddWeighted Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 2: 512x512 pixels
+  Total pixels processed: 262144
+Execution time: 115779 microseconds
+Execution time: 115 milliseconds
+Execution time: 115.779000 milliseconds (precise)
+Performance: 2.26 pixels/microsecond
+Performance: 2264175.71 pixels/second
+==========================================
+Scalar image written successfully.
+Image read successfully. Size: 512x512
+Image read successfully. Size: 256x256
+Starting Scalar AddWeighted function...
+=== Scalar AddWeighted Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 2: 256x256 pixels
+  Total pixels processed: 262144
+Execution time: 91023 microseconds
+Execution time: 91 milliseconds
+Execution time: 91.023000 milliseconds (precise)
+Performance: 2.88 pixels/microsecond
+Performance: 2879975.39 pixels/second
+==========================================
+Scalar image written successfully.
+========================================================WRAP===================================
+Image read successfully. Size: 512x512
+Image read successfully. Size: 512x512
+Starting Scalar AddWeighted function...
+=== Scalar AddWeighted Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 2: 512x512 pixels
+  Total pixels processed: 262144
+Execution time: 105817 microseconds
+Execution time: 105 milliseconds
+Execution time: 105.817000 milliseconds (precise)
+Performance: 2.48 pixels/microsecond
+Performance: 2477333.51 pixels/second
+==========================================
+Image read successfully. Size: 512x512
+Image read successfully. Size: 256x256
+Starting Scalar AddWeighted function...
+=== Scalar AddWeighted Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 2: 256x256 pixels
+  Total pixels processed: 262144
+Execution time: 81061 microseconds
+Execution time: 81 milliseconds
+Execution time: 81.061000 milliseconds (precise)
+Performance: 3.23 pixels/microsecond
+Performance: 3233910.27 pixels/second
+==========================================
+Scalar image written successfully.
+===============================Weighted Addition RVV m=1=====================================
+=======================SATURATION=============================================
+Image read successfully. Size: 512x512
+Image read successfully. Size: 512x512
+Starting __riscv_AddWeighted function...
+=== __riscv_AddWeighted Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 2: 512x512 pixels
+  Total pixels processed: 262144
+Execution time: 7535 microseconds
+Execution time: 7 milliseconds
+Execution time: 7.535000 milliseconds (precise)
+Performance: 34.79 pixels/microsecond
+Performance: 34790179.16 pixels/second
+==========================================
+Image read successfully. Size: 512x512
+Image read successfully. Size: 256x256
+Starting __riscv_AddWeighted function...
+=== __riscv_AddWeighted Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 2: 256x256 pixels
+  Total pixels processed: 262144
+Execution time: 10349 microseconds
+Execution time: 10 milliseconds
+Execution time: 10.349000 milliseconds (precise)
+Performance: 25.33 pixels/microsecond
+Performance: 25330370.08 pixels/second
+==========================================
+AddWeightedRVV image written successfully.
+================================WRAP=================================
+Image read successfully. Size: 512x512
+Image read successfully. Size: 512x512
+Starting __riscv_AddWeighted function...
+=== __riscv_AddWeighted Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 2: 512x512 pixels
+  Total pixels processed: 262144
+Execution time: 8316 microseconds
+Execution time: 8 milliseconds
+Execution time: 8.316000 milliseconds (precise)
+Performance: 31.52 pixels/microsecond
+Performance: 31522847.52 pixels/second
+==========================================
+AddWeightedRVV image written successfully.
+
+Image read successfully. Size: 512x512
+Image read successfully. Size: 256x256
+Starting __riscv_AddWeighted function...
+=== __riscv_AddWeighted Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 2: 256x256 pixels
+  Total pixels processed: 262144
+Execution time: 12348 microseconds
+Execution time: 12 milliseconds
+Execution time: 12.348000 milliseconds (precise)
+Performance: 21.23 pixels/microsecond
+Performance: 21229672.82 pixels/second
+==========================================
+AddWeightedRVV image written successfully.
+
+
+=============================== Accumulate RVV m=1=====================================
+==================================SATURATION===========================================
+Image read successfully. Size: 512x512
+Image read successfully. Size: 256x256
+Image read successfully. Size: 512x512
+Starting __riscv_Accumulate function...
+=== __riscv_Accumulate Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 2: 256x256 pixels
+  Total pixels processed: 262144
+Execution time: 1463 microseconds
+Execution time: 1 milliseconds(Fast Due to checking which is bigger Accumulator or Image1 if Accumulator then Center and Add without using tempvar)
+Execution time: 1.463000 milliseconds (precise)
+Performance: 179.18 pixels/microsecond
+Performance: 179182501.71 pixels/second
+==========================================
+Accumulate image written successfully.
+Image read successfully. Size: 512x512
+Image read successfully. Size: 256x256
+Image read successfully. Size: 512x512
+Starting __riscv_Accumulate function...
+=== __riscv_Accumulate Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 3: 512x512 pixels
+  Total pixels processed: 262144
+Execution time: 5807 microseconds
+Execution time: 5 milliseconds
+Execution time: 5.807000 milliseconds (precise) (Here returns to its normal value As if both are Equal or Accumulator is smaller (from 5ms to 6ms)
+Performance: 45.14 pixels/microsecond
+Performance: 45142758.74 pixels/second
+==========================================
+Accumulate image written successfully.
+=============================WRAP=============================================
+Image read successfully. Size: 512x512
+Image read successfully. Size: 256x256
+Image read successfully. Size: 512x512
+Starting __riscv_Accumulate function...
+=== __riscv_Accumulate Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 3: 512x512 pixels
+  Total pixels processed: 262144
+Execution time: 4529 microseconds
+Execution time: 4 milliseconds
+Execution time: 4.529000 milliseconds (precise)
+Performance: 57.88 pixels/microsecond
+Performance: 57881209.98 pixels/second
+==========================================
+Accumulate image written successfully.
+==============================================================================
+Image read successfully. Size: 512x512
+Image read successfully. Size: 256x256
+Image read successfully. Size: 512x512
+Starting __riscv_Accumulate function...
+=== __riscv_Accumulate Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 2: 256x256 pixels
+  Total pixels processed: 262144
+Execution time: 1144 microseconds
+Execution time: 1 milliseconds
+Execution time: 1.144000 milliseconds (precise)
+Performance: 229.15 pixels/microsecond
+Performance: 229146853.15 pixels/second
+==========================================
+Accumulate image written successfully.
+
+=======================================ACCUMULATE SQUARED RVV m=1==========================
+==================================SATURATION===========================================
+Image read successfully. Size: 512x512
+Image read successfully. Size: 256x256
+Image read successfully. Size: 512x512
+Starting __riscv_AccumulateSquared function...
+=== __riscv_AccumulateSquared Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 2: 256x256 pixels
+  Total pixels processed: 262144
+Execution time: 2112 microseconds
+Execution time: 2 milliseconds
+Execution time: 2.112000 milliseconds (precise)
+Performance: 124.12 pixels/microsecond
+Performance: 124121212.12 pixels/second
+==========================================
+Accumulate Squared image written successfully.
+==================================================
+
+Image read successfully. Size: 512x512
+Image read successfully. Size: 256x256
+Image read successfully. Size: 512x512
+Starting __riscv_AccumulateSquared function...
+=== __riscv_AccumulateSquared Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 3: 512x512 pixels
+  Total pixels processed: 262144
+Execution time: 8403 microseconds
+Execution time: 8 milliseconds
+Execution time: 8.403000 milliseconds (precise)
+Performance: 31.20 pixels/microsecond
+Performance: 31196477.45 pixels/second
+==========================================
+Accumulate Squared image written successfully.
+
+
+===================================WRAP================================================
+Image read successfully. Size: 512x512
+Image read successfully. Size: 256x256
+Image read successfully. Size: 512x512
+Starting __riscv_AccumulateSquared function...
+=== __riscv_AccumulateSquared Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 2: 256x256 pixels
+  Total pixels processed: 262144
+Execution time: 1813 microseconds
+Execution time: 1 milliseconds
+Execution time: 1.813000 milliseconds (precise)
+Performance: 144.59 pixels/microsecond
+Performance: 144591285.16 pixels/second
+==========================================
+Accumulate Squared image written successfully
+================================================
+Image read successfully. Size: 512x512
+Image read successfully. Size: 256x256
+Image read successfully. Size: 512x512
+Starting __riscv_AccumulateSquared function...
+=== __riscv_AccumulateSquared Performance Results ===
+Input images:
+  Image 1: 512x512 pixels
+  Image 3: 512x512 pixels
+  Total pixels processed: 262144
+Execution time: 7207 microseconds
+Execution time: 7 milliseconds
+Execution time: 7.207000 milliseconds (precise)
+Performance: 36.37 pixels/microsecond
+Performance: 36373525.74 pixels/second
+==========================================
+Accumulate Squared image written successfully
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
